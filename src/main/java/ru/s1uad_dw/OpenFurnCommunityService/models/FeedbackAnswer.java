@@ -21,7 +21,7 @@ public class FeedbackAnswer {
     private String text;
     @ManyToOne
     private Feedback feedback;
-    private Date creationDate = new Date();
+    private Date creationDate;
 
     public FeedbackAnswer(UUID userId, String text, Feedback feedback){
         this.userId = userId;

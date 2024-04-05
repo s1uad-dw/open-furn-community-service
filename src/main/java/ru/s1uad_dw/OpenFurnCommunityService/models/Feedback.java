@@ -25,14 +25,14 @@ public class Feedback {
     private List<FeedbackAnswer> answers;
     private int evaluation;
     private Date creationDate;
-    private UUID project;
+    private UUID projectId;
 
-    public Feedback(UUID userId, String text, int evaluation, UUID project){
+    public Feedback(UUID userId, String text, int evaluation, UUID projectId){
         this.userId = userId;
         this.text = text;
         this.answers = new ArrayList<>();
         this.evaluation = evaluation;
         this.creationDate = new Date();
-        this.project = project;
+        this.projectId = projectId;
     }
 }
