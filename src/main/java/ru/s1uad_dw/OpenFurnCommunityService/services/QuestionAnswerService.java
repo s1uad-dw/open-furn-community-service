@@ -29,9 +29,11 @@ public class QuestionAnswerService {
     public UUID create(String token, CreateQuestionAnswerDto dto){
         tokenUtility.checkTokenExpiration(token);
         Optional<Question> Question = QuestionRepository.findById(dto.getQuestionId());
-        if (Question.isPresent())
-            return repository.save(QuestionAnswerMappers.CreateQuestionAnswerDtoToDao(dto, Question.get())).getId();
-        throw new InvalidDataException("Invalid Question");
+        if (Question.isEmpty())
+            throw new InvalidDataException("Invalid Question");
+        if (dto.getText().isBlank())
+            throw new InvalidDataException("Invalid text");
+        return repository.save(QuestionAnswerMappers.CreateQuestionAnswerDtoToDao(dto, Question.get())).getId();
     }
 
     public List<ViewQuestionAnswerDto> findByToken(String token){

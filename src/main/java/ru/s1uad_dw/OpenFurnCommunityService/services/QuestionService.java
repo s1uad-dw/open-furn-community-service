@@ -26,7 +26,9 @@ public class QuestionService {
 
     public UUID create(String token, CreateQuestionDto dto){
         tokenUtility.checkTokenExpiration(token);
-        return repository.save(QuestionMappers.CreateQuestionDtoToDao(dto)).getId();
+        if (!dto.getText().isBlank())
+            return repository.save(QuestionMappers.CreateQuestionDtoToDao(dto)).getId();
+        throw new InvalidDataException("Invalid text");
     }
 
     public List<ViewQuestionDto> findByProjectId(UUID projectId){

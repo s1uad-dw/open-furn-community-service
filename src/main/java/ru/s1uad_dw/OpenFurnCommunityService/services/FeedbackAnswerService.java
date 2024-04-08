@@ -30,9 +30,11 @@ public class FeedbackAnswerService {
     public UUID create(String token, CreateFeedbackAnswerDto dto){
         tokenUtility.checkTokenExpiration(token);
         Optional<Feedback> feedback = feedbackRepository.findById(dto.getFeedbackId());
-        if (feedback.isPresent())
-            return repository.save(FeedbackAnswerMappers.CreateFeedbackAnswerDtoToDao(dto, feedback.get())).getId();
-        throw new InvalidDataException("Invalid feedback");
+        if (feedback.isEmpty())
+            throw new InvalidDataException("Invalid feedback");
+        if (dto.getText().isBlank())
+            throw new InvalidDataException("Invalid text");
+        return repository.save(FeedbackAnswerMappers.CreateFeedbackAnswerDtoToDao(dto, feedback.get())).getId();
     }
 
     public List<ViewFeedbackAnswerDto> findByToken(String token){

@@ -28,9 +28,11 @@ public class FeedbackService {
 
     public UUID create(String token, CreateFeedbackDto dto){
         tokenUtility.checkTokenExpiration(token);
-        if (dto.getEvaluation()<=5 && dto.getEvaluation()>=1)
-            return repository.save(FeedbackMappers.CreateFeedbackDtoToDao(dto)).getId();
-        throw new InvalidDataException("Invalid evaluation");
+        if (dto.getEvaluation()>=5 || dto.getEvaluation()<=1)
+            throw new InvalidDataException("Invalid evaluation");
+        else if (!dto.getText().isBlank())
+            throw new InvalidDataException("Invalid text");
+        return repository.save(FeedbackMappers.CreateFeedbackDtoToDao(dto)).getId();
     }
 
     public List<ViewFeedbackDto> findByProjectId(UUID projectId){
