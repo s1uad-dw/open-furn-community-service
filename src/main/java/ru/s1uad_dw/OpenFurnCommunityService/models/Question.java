@@ -24,13 +24,13 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuestionAnswer> answers;
     private Date creationDate;
-    private UUID project;
+    private UUID projectId;
 
-    public Question(UUID userId, String text, UUID project){
+    public Question(UUID userId, String text, UUID projectId){
         this.userId = userId;
         this.text = text;
         this.answers = new ArrayList<>();
         this.creationDate = new Date();
-        this.project = project;
+        this.projectId = projectId;
     }
 }
